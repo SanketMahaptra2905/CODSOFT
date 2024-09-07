@@ -33,5 +33,5 @@ These projects were completed as part of my internship at CodSoft. 🚀
 📬 Contact Me
 For any questions or feedback, feel free to reach out:
 
-Email: your.email@example.com
+Email: sanket29136@gmail.com
 Enjoy the showcase! 🎉
