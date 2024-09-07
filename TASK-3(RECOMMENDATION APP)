@@ -1,0 +1,210 @@
+//TASK 4(ACCORDING TO CODSOFT LIST)
+//
+//        RECOMMENDATION SYSTEM
+//
+//        Create a simple recommendation system that suggests items to
+//        users based on their preferences. You can use techniques like
+//        collaborative filtering or content-based filtering to recommend
+//
+//        movies, books, or products to users.
+
+import java.util.*;
+
+interface Recommendable {
+    String getCategory();
+}
+
+class Movie implements Recommendable {
+    String title;
+    String genre;
+
+    Movie(String title, String genre) {
+        this.title = title;
+        this.genre = genre;
+    }
+
+    @Override
+    public String getCategory() {
+        return genre;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie: " + title + " (" + genre + ")";
+    }
+}
+
+class Book implements Recommendable {
+    String title;
+    String genre;
+
+    Book(String title, String genre) {
+        this.title = title;
+        this.genre = genre;
+    }
+
+    @Override
+    public String getCategory() {
+        return genre;
+    }
+
+    @Override
+    public String toString() {
+        return "Book: " + title + " (" + genre + ")";
+    }
+}
+
+class Product implements Recommendable {
+    String name;
+    String category;
+
+    Product(String name, String category) {
+        this.name = name;
+        this.category = category;
+    }
+
+    @Override
+    public String getCategory() {
+        return category;
+    }
+
+    @Override
+    public String toString() {
+        return "Product: " + name + " (Category: " + category + ")";
+    }
+}
+
+class RecommendationSystem<T extends Recommendable> {
+    List<T> items;
+
+    RecommendationSystem(List<T> items) {
+        this.items = items;
+    }
+
+    public List<T> recommend(String category) {
+        List<T> recommendedItems = new ArrayList<>();
+
+        for (T item : items) {
+            if (item.getCategory().equalsIgnoreCase(category)) {
+                recommendedItems.add(item);
+            }
+        }
+        return recommendedItems;
+    }
+}
+
+public class RecommendationApp {
+    public static void main(String[] args) {
+        List<Movie> movies = Arrays.asList(
+                new Movie("Inception", "Sci-Fi"),
+                new Movie("Interstellar", "Sci-Fi"),
+                new Movie("The Dark Knight", "Action"),
+                new Movie("The Matrix", "Sci-Fi"),
+                new Movie("The Godfather", "Crime"),
+                new Movie("Titanic", "Romance"),
+                new Movie("Pulp Fiction", "Crime"),
+                new Movie("The Avengers", "Action"),
+                new Movie("Frozen", "Animation"),
+                new Movie("Spirited Away", "Animation")
+        );
+
+        List<Book> books = Arrays.asList(
+                new Book("Dune", "Sci-Fi"),
+                new Book("1984", "Dystopian"),
+                new Book("Brave New World", "Dystopian"),
+                new Book("Foundation", "Sci-Fi"),
+                new Book("Pride and Prejudice", "Romance"),
+                new Book("The Catcher in the Rye", "Fiction"),
+                new Book("To Kill a Mockingbird", "Fiction"),
+                new Book("The Hobbit", "Fantasy"),
+                new Book("Harry Potter", "Fantasy"),
+                new Book("The Great Gatsby", "Classic")
+        );
+
+        List<Product> products = Arrays.asList(
+                new Product("Laptop", "Electronics"),
+                new Product("Smartphone", "Electronics"),
+                new Product("T-shirt", "Clothing"),
+                new Product("Jeans", "Clothing"),
+                new Product("Watch", "Accessories"),
+                new Product("Sneakers", "Footwear"),
+                new Product("Tablet", "Electronics"),
+                new Product("Headphones", "Electronics"),
+                new Product("Sunglasses", "Accessories"),
+                new Product("Backpack", "Accessories")
+        );
+
+        Scanner scanner = new Scanner(System.in);
+        String choice = "";
+
+        while (!choice.equalsIgnoreCase("quit")) {
+            System.out.println("\nChoose what you want recommendations for (or type 'quit' to exit):");
+            System.out.println("Movies, Books, or Products?");
+            choice = scanner.nextLine().trim().toLowerCase();
+
+            if (choice.equalsIgnoreCase("quit")) {
+                System.out.println("Thank you for using the recommendation system. Goodbye!");
+                break;
+            }
+
+            switch (choice) {
+                case "movies":
+                    System.out.println("Enter the movie genre you like (e.g., Sci-Fi, Action, Romance, etc.):");
+                    String movieGenre = scanner.nextLine();
+
+                    RecommendationSystem<Movie> movieRecommender = new RecommendationSystem<>(movies);
+                    List<Movie> movieRecommendations = movieRecommender.recommend(movieGenre);
+
+                    if (!movieRecommendations.isEmpty()) {
+                        System.out.println("Movies in the genre " + movieGenre + ":");
+                        for (Movie movie : movieRecommendations) {
+                            System.out.println(movie);
+                        }
+                    } else {
+                        System.out.println("No movies found for the genre: " + movieGenre);
+                    }
+                    break;
+
+                case "books":
+                    System.out.println("Enter the book genre you like (e.g., Sci-Fi, Dystopian, Romance, etc.):");
+                    String bookGenre = scanner.nextLine();
+
+                    RecommendationSystem<Book> bookRecommender = new RecommendationSystem<>(books);
+                    List<Book> bookRecommendations = bookRecommender.recommend(bookGenre);
+
+                    if (!bookRecommendations.isEmpty()) {
+                        System.out.println("Books in the genre " + bookGenre + ":");
+                        for (Book book : bookRecommendations) {
+                            System.out.println(book);
+                        }
+                    } else {
+                        System.out.println("No books found for the genre: " + bookGenre);
+                    }
+                    break;
+
+                case "products":
+                    System.out.println("Enter the product category you like (e.g., Electronics, Clothing, Accessories, etc.):");
+                    String productCategory = scanner.nextLine();
+
+                    RecommendationSystem<Product> productRecommender = new RecommendationSystem<>(products);
+                    List<Product> productRecommendations = productRecommender.recommend(productCategory);
+
+                    if (!productRecommendations.isEmpty()) {
+                        System.out.println("Products in the category " + productCategory + ":");
+                        for (Product product : productRecommendations) {
+                            System.out.println(product);
+                        }
+                    } else {
+                        System.out.println("No products found for the category: " + productCategory);
+                    }
+                    break;
+
+                default:
+                    System.out.println("Invalid input. Please choose from Movies, Books, or Products.");
+                    break;
+            }
+        }
+
+        scanner.close();
+    }
+}
