@@ -1,0 +1,70 @@
+// TASK 1
+
+// CHATBOT WITH RULE-BASED
+
+// RESPONSES
+
+// Build a simple chatbot that responds to user inputs based on
+// predefined rules. Use if-else statements or pattern matching
+// techniques to identify user queries and provide appropriate
+// responses. This will give you a basic understanding of natural
+
+// language processing and conversation flow.
+
+import java.util.Scanner;
+
+public class AdvancedChatbot {
+
+    public static String getResponse(String userInput) {
+        // Convert user input to lowercase to handle case-insensitivity
+        userInput = userInput.toLowerCase();
+
+        // Define rules for responses
+        if (userInput.contains("hello") || userInput.contains("hi")) {
+            return "Hello! How can I assist you today? You can ask me about my purpose, tell me a joke, or ask for general help.";
+        } else if (userInput.contains("how are you")) {
+            return "I'm doing well, thank you! I'm here to help you with any questions you might have.";
+        } else if (userInput.contains("your name")) {
+            return "I don't have a personal name, but you can call me Chatbot. How can I assist you today?";
+        } else if (userInput.contains("thank you")) {
+            return "You're welcome! If there's anything else you need, just let me know.";
+        } else if (userInput.contains("bye") || userInput.contains("goodbye")) {
+            return "Goodbye! Have a fantastic day ahead!";
+        } else if (userInput.contains("what is your purpose") || userInput.contains("what do you do")) {
+            return "My purpose is to assist you by answering your questions and providing useful information.";
+        } else if (userInput.contains("tell me a joke")) {
+            return "Why don't programmers like nature? It has too many bugs!";
+        } else if (userInput.contains("what is the time") || userInput.contains("current time")) {
+            return "I can't check the time right now, but you can find it on your device.";
+        } else if (userInput.contains("what is the weather") || userInput.contains("weather")) {
+            return "I can't check the weather, but you might want to check a weather app or website for the latest updates.";
+        } else if (userInput.contains("can you help me") || userInput.contains("assist me")) {
+            return "Absolutely! Please let me know what you need help with.";
+        } else if (userInput.contains("who created you") || userInput.contains("who made you")) {
+            return "I was created by a you to help answer questions and provide information.";
+        } else if (userInput.contains("how is the chatbot") || userInput.contains("chatbot")) {
+            return "I'm here and ready to assist you! How can I make your experience better?";
+        } else {
+            return "I’m not sure how to respond to that. Could you please provide more details or ask something else?";
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the Advanced Chatbot! Type 'bye' or 'goodbye' to exit.");
+
+        while (true) {
+            System.out.print("You: ");
+            String userInput = scanner.nextLine();
+            String response = getResponse(userInput);
+            System.out.println("Chatbot: " + response);
+
+            if (userInput.toLowerCase().contains("bye") || userInput.toLowerCase().contains("goodbye")) {
+                break;
+            }
+        }
+
+        scanner.close();
+    }
+}
+
